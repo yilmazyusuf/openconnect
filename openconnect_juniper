@@ -1,0 +1,21 @@
+#!/bin/sh
+
+check() {
+	if sudo nmcli con show --active | grep -i tun; then
+	    echo 'connected'
+	else
+	    login
+	fi
+
+}
+
+login(){
+	echo {PASSWORD} | openconnect -u {USER_NAME} -b --juniper {AUTH_URL}
+	echo 'connected'
+}
+
+logout(){
+	#sudo pkill openconnect
+	sudo killall -w -SIGINT openconnect
+	echo 'disconnected'
+}
